@@ -66,6 +66,10 @@ function PayNow.CommandQueue.ExecuteCommand(command)
         sanitizedString = sanitizedString .. utf8.char(c)
     end
 
+    -- TODO: We need to find a way how to properly split the commands depending on the
+    -- variable replacements - expose the actual command without applied replacements
+    -- and then split the command depending on that (so if players have spaces in their names it won't cause chaos)
+
     --local parsedArgs = wrapQuotedArgs(sanitizedString)
     local parsedArgs = string.Split(sanitizedString, " ")
 
