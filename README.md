@@ -8,7 +8,9 @@ Ensure you have administrative access to your Gmod server and the ability to mod
 
 ## Installation
 
-The PayNow plugin configuration is automatically saved into the `garrysmod/addons/paynow` directory.
+Copy all files from this repository to a directory named `garrysmod/addons/paynow`.  
+
+The PayNow plugin configuration is automatically saved into the `garrysmod/data/paynow` directory.
 
 ## Configuration
 
