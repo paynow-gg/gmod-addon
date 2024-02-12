@@ -34,23 +34,6 @@ function PayNow.CommandQueue.CheckIfCommandAlreadyExecuted(command)
     return false
 end
 
-local function wrapQuotedArgs(str)
-    local params, quoted = {}, false
-    for sep, word in str:gmatch("(%s*)(%S+)") do
-      local word, oquote = word:gsub('^"', "") -- check opening quote
-      local word, cquote = word:gsub('"$', "") -- check closing quote
-      -- flip open/close quotes when inside quoted string
-      if quoted then -- if already quoted, then concatenate
-        params[#params] = params[#params]..sep..word
-      else -- otherwise, add a new element to the list
-        params[#params+1] = word
-      end
-      if quoted and word == "" then oquote, cquote = 0, oquote end
-      quoted = (quoted or (oquote > 0)) and not (cquote > 0)
-    end
-    return params
-end
-
 function PayNow.CommandQueue.ExecuteCommand(command)
     local commandToExecute = string.Trim(command.command)
 
@@ -66,11 +49,6 @@ function PayNow.CommandQueue.ExecuteCommand(command)
         sanitizedString = sanitizedString .. utf8.char(c)
     end
 
-    -- TODO: We need to find a way how to properly split the commands depending on the
-    -- variable replacements - expose the actual command without applied replacements
-    -- and then split the command depending on that (so if players have spaces in their names it won't cause chaos)
-
-    --local parsedArgs = wrapQuotedArgs(sanitizedString)
     local parsedArgs = string.Split(sanitizedString, " ")
 
     PayNow.PrintDebug("Executing the following command:")
