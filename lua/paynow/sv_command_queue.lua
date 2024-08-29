@@ -116,7 +116,7 @@ function PayNow.CommandQueue.FetchPendingCommands()
 
         local commands = util.JSONToTable(response or {})
         if not commands then
-            PayNow.PrintError("Failed to fetch parse JSON for pending commands: ", response)
+            PayNow.PrintError("Failed to parse JSON for pending commands: ", response)
             return
         end
 

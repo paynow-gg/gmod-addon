@@ -103,6 +103,8 @@ concommand.Add("paynow.token", function (ply, cmd, args, argStr)
 
         PayNow.Config.SetToken(token)
         concommandReply(ply, "Token set successfully!")
+
+        PayNow.Link.LinkGameServer()
     end)
 end, nil, nil, FCVAR_PROTECTED)
 

@@ -41,7 +41,8 @@ local function checkTokensValid()
         if not success then
             MsgC(PayNow.BrandColor, "\n[PayNow]: \n", color_white, unpack(tokenFailureText))
         else
-            PayNow.Print("Successfully connected to PayNow API!")
+            PayNow.Print("Successfully validated PayNow token!")
+            PayNow.Link.LinkGameServer()
         end
     end)
 

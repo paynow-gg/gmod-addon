@@ -11,13 +11,11 @@ function PayNow.API.ParseResponseError(response)
         return response
     end
 
-    return string.format("%s (code %s)", parsed.message or "Unknown", parsed.code or "Unknown")
+    return string.format("%s (code %s, trace %s)", parsed.message or "Unknown", parsed.code or "Unknown", parsed.trace_id or "N/A")
 end
 
 function PayNow.API.HTTP(path, method, body, customHeaders, callback)
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
+    local headers = {}
 
     local configToken = PayNow.Config.GetToken()
     if configToken then
