@@ -140,6 +140,7 @@ end
 function PayNow.CommandQueue.CreateTimer()
     timer.Create("PayNow.CommandQueue.Timer", PayNow.Config.GetInterval(), 0, function ()
         if not PayNow.Config.GetToken() then return end
+        if not PayNow.Initialized then return end
     
         PayNow.CommandQueue.FetchPendingCommands()
     end)

@@ -8,6 +8,11 @@ function PayNow.Link.LinkGameServer()
         version = PayNow.Version
     }
 
+    -- Fallback to an alternative method of fetching the IP if it's not available yet
+    if string.StartWith(data.ip, "0.0.0.0:") then
+        data.ip = GetConVarString('ip') .. ':' .. GetConVarString('hostport')
+    end
+
     PayNow.API.POST("v1/delivery/gameserver/link", util.TableToJSON(data), function (statusCode, response, headers)
         if statusCode >= 400 then
             PayNow.PrintError("Failed to link gameserver: " .. PayNow.API.ParseResponseError(response))

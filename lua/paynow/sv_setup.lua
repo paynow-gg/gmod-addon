@@ -30,7 +30,10 @@ local tokenFailureText = {
     "\n"
 }
 
-local function checkTokensValid()
+local function initPayNow()
+    if PayNow.Initialized then return end
+    PayNow.Initialized = true
+
     local token = PayNow.Config.GetToken()
     if not token then
         MsgC(PayNow.BrandColor, "\n[PayNow]: \n", color_white, unpack(setupTokenText))
@@ -52,10 +55,28 @@ local function checkTokensValid()
     end
 end
 
-if (PayNow.Config.Loaded) then
-    checkTokensValid()
-else
-    hook.Add("PayNow.Config.Loaded", "PayNow.Setup.PayNowConfigLoaded", function ()
-        checkTokensValid()
-    end)
+local function waitForConfigLoadAndThenInit()
+    if (PayNow.Config.Loaded) then
+        initPayNow()
+    else
+        hook.Add("PayNow.Config.Loaded", "PayNow.Setup.PayNowConfigLoaded", function ()
+            initPayNow()
+        end)
+    end
 end
+
+-- We listen for an InitPostEntity hook AND a 30 timer simple delay
+-- just to make sure initPayNow() gets called, probably useless, but whatever
+-- (we need to run this delayed because game.GetIPAddress() might not be available,
+-- and we don't want to run commands prematurely until all addons are loaded)
+hook.Add("InitPostEntity", "PayNow.Setup.InitPostEntity", function ()
+    -- Wait for a while.. game.GetIPAddress() is likely not available yet
+    -- and some plugins might still keep loading
+    timer.Simple(5, function ()
+        waitForConfigLoadAndThenInit()
+    end)
+end)
+
+timer.Simple(30, function ()
+    waitForConfigLoadAndThenInit()
+end)
