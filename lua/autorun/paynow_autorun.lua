@@ -54,8 +54,10 @@ end
 -- Include the actual addon files
 
 function PayNow.LoadAddon()
-    include("paynow/sv_config.lua")
-    PayNow.Config.Load()
+	if (SERVER) then
+		include("paynow/sv_config.lua")
+		PayNow.Config.Load()
+	end
     
     PayNow.Load("paynow")
 end
