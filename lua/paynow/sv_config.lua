@@ -4,6 +4,7 @@ PayNow.Config.Data = PayNow.Config.Data or {}
 PayNow.Config.Path = "paynow/config.json"
 
 PayNow.Config.DefaultCommandFetchInterval = 10
+PayNow.Config.EventsQueueReportInterval = 60
 
 function PayNow.Config.Load()
     if not file.Exists(PayNow.Config.Path, "DATA") then
