@@ -12,13 +12,15 @@ PayNow.Events.Queue = PayNow.Events.Queue or {}
 
 gameevent.Listen("player_connect")
 hook.Add("player_connect", "PayNow.Events.PlayerConnect", function(data)
-    if data.bot then return end
+    if data.bot == 1 then return end
 
 	local sid64 = util.SteamIDTo64(data.networkid)
-    local ipAddress = data.address
-    if ipAddress == "none" or ipAddress == "loopback" then
+    local ipAddressWithPort = data.address
+    if ipAddressWithPort == "none" or ipAddressWithPort == "loopback" then
         return
     end
+
+    local ipAddress = string.Split(ipAddressWithPort, ":")[1]
 
     table.insert(PayNow.Events.Queue, {
         event = "player_join",
