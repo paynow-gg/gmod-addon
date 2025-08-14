@@ -1,7 +1,7 @@
 PayNow = PayNow or {}
 
 PayNow.Debug = false
-PayNow.Version = "0.0.2"
+PayNow.Version = "1.0.0"
 PayNow.BrandColor = Color(255, 73, 255)
 
 function PayNow.Load(dir, svOnly, shOnly)
